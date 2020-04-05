@@ -1,103 +1,50 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>COVID-19 Hate Speech Visualization</title>
-    <script src="https://api.mapbox.com/mapbox-gl-js/v1.9.0/mapbox-gl.js"></script>
-    <link href="https://api.mapbox.com/mapbox-gl-js/v1.9.0/mapbox-gl.css" rel="stylesheet" />
-    
-    <meta name="viewport" content="initial-scale=1.0">
-    <meta charset="utf-8">
-    <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 80%;
-        width:65%
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 5px;  
-        padding: 0;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>COVID-19 Hate Speech Visualization</h1>
-      <div id="map"></div>
-      <script>
-        mapboxgl.accessToken = 'pk.eyJ1IjoibW5pdmVydGhpIiwiYSI6ImNrOGNjOTVubzBoeGwzZnF1a29wMmR1NGYifQ.erWAIGgGKocr3d3pHNJDMQ';
-          var map = new mapboxgl.Map({
-              container: 'map',
-              style: 'mapbox://styles/mapbox/light-v10',
-              zoom: 12,
-              center: [-122.447303, 37.753574]
-          });
-      
-          map.on('load', function() {
-              /* Sample feature from the `examples.8fgz4egr` tileset:
-              {
-                  "type": "Feature",
-                  "properties": {
-                      "ethnicity": "White"
-                  },
-                  "geometry": {
-                      "type": "Point",
-                      "coordinates": [ -122.447303, 37.753574 ]
-                  }
-              }
-              */
-              map.addSource('ethnicity', {
-                  type: 'vector',
-                  url: 'mapbox://examples.8fgz4egr'
-              });
-              map.addLayer({
-                  'id': 'population',
-                  'type': 'circle',
-                  'source': 'ethnicity',
-                  'source-layer': 'sf2010',
-                  'paint': {
-                      // make circles larger as the user zooms from z12 to z22
-                      'circle-radius': {
-                          'base': 1.75,
-                          'stops': [[12, 2], [22, 180]]
-                      },
-                      // color circles by ethnicity, using a match expression
-                      // https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-match
-                      'circle-color': [
-                          'match',
-                          ['get', 'ethnicity'],
-                          'White',
-                          '#fbb03b',
-                          'Black',
-                          '#223b53',
-                          'Hispanic',
-                          '#e55e5e',
-                          'Asian',
-                          '#3bb2d0',
-                          /* other */ '#ccc'
-                      ]
-                  }
-              });
-          });
-      </script>
-      <script>
-        function geocodeAddress(geocoder, resultsMap) {
-        var address = document.getElementById('address').value;
-        geocoder.geocode({'address': address}, function(results, status) {
-          if (status === 'OK') {
-            resultsMap.setCenter(results[0].geometry.location);
-            var marker = new google.maps.Marker({
-              map: resultsMap,
-              position: results[0].geometry.location
-            });
-          } else {
-            alert('Geocode was not successful for the following reason: ' + status);
-          }
-        });
-      }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBy2MajiNqxQBFMElig1O2alXXxLxcAZjU&callback=initMap"
-    async defer></script>
-  </body>
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Tracking Hate Speech Amid the COVID-19 Outbreak</title>
+  
+</head>
+<body>
+  <h1>Tracking Hate Speech Amid the COVID-19 Outbreak</h1>
+  <div id="vizContainer"></div>
+  
+  <script type='text/javascript' src='https://prod-useast-a.online.tableau.com/javascripts/api/viz_v1.js'></script>
+  <div class='tableauPlaceholder' style='width: 1600px; height: 927px;'>
+    <object class='tableauViz' width='1600' height='927' style='display:none;'>
+      <param name='host_url' value='https%3A%2F%2Fprod-useast-a.online.tableau.com%2F' /> 
+      <param name='embed_code_version' value='3' /> 
+      <param name='site_root' value='&#47;t&#47;trackinghatespeechamidthecovid19outbreak' />
+      <param name='name' value='covid19-visualization&#47;country-dashboard' />
+      <param name='tabs' value='no' />
+      <param name='toolbar' value='no' />
+      <param name='showAppBanner' value='false' />
+    </object>
+  </div>
+  <script type='text/javascript' src='https://prod-useast-a.online.tableau.com/javascripts/api/viz_v1.js'></script>
+  <div class='tableauPlaceholder' style='width: 1600px; height: 927px;'>
+    <object class='tableauViz' width='1600' height='927' style='display:none;'>
+      <param name='host_url' value='https%3A%2F%2Fprod-useast-a.online.tableau.com%2F' /> 
+      <param name='embed_code_version' value='3' /> 
+      <param name='site_root' value='&#47;t&#47;trackinghatespeechamidthecovid19outbreak' />
+      <param name='name' value='covid19-visualization&#47;state-dashboard' />
+      <param name='tabs' value='no' />
+      <param name='toolbar' value='no' />
+      <param name='showAppBanner' value='false' />
+    </object>
+  </div>
+  <script type='text/javascript' src='https://prod-useast-a.online.tableau.com/javascripts/api/viz_v1.js'></script>
+  <div class='tableauPlaceholder' style='width: 1600px; height: 927px;'>
+    <object class='tableauViz' width='1600' height='927' style='display:none;'>
+      <param name='host_url' value='https%3A%2F%2Fprod-useast-a.online.tableau.com%2F' /> 
+      <param name='embed_code_version' value='3' />  
+      <param name='site_root' value='&#47;t&#47;trackinghatespeechamidthecovid19outbreak' />
+      <param name='name' value='covid19-visualization&#47;county-dashboard' />
+      <param name='tabs' value='no' />
+      <param name='toolbar' value='no' />
+      <param name='showAppBanner' value='false' />
+    </object>
+  </div>
+</body>
 </html>
