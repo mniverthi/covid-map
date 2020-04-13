@@ -526,6 +526,14 @@
       <layout dim-ordering='alphabetic' dim-percentage='0.480565' measure-ordering='alphabetic' measure-percentage='0.519435' rowDisplayCount='60000' show-structure='true' />
       <style>
         <style-rule element='mark'>
+          <encoding attr='color' field='[:Measure Names]' type='palette'>
+            <map to='#e15759'>
+              <bucket>&quot;[federated.19otout143nljk1fk78820o04pph].[attr:deaths:qk]&quot;</bucket>
+            </map>
+            <map to='#f28e2b'>
+              <bucket>&quot;[federated.19otout143nljk1fk78820o04pph].[attr:cases:qk]&quot;</bucket>
+            </map>
+          </encoding>
           <encoding attr='color' field='[none:status:nk]' type='palette'>
             <map to='#309143'>
               <bucket>&quot;Q&quot;</bucket>
@@ -538,14 +546,6 @@
             </map>
             <map to='#e39802'>
               <bucket>&quot;SIP&quot;</bucket>
-            </map>
-          </encoding>
-          <encoding attr='color' field='[:Measure Names]' type='palette'>
-            <map to='#e15759'>
-              <bucket>&quot;[federated.19otout143nljk1fk78820o04pph].[attr:deaths:qk]&quot;</bucket>
-            </map>
-            <map to='#f28e2b'>
-              <bucket>&quot;[federated.19otout143nljk1fk78820o04pph].[attr:cases:qk]&quot;</bucket>
             </map>
           </encoding>
         </style-rule>
@@ -1153,6 +1153,7 @@
           <highlight field='[federated.19otout143nljk1fk78820o04pph].[none:status:nk]'>
             <bucket-selection />
           </highlight>
+          <floating-toolbar-visibility value='2' />
           <default-map-tool-selection tool='2' />
           <map-navigation value='1' />
         </viewpoint>

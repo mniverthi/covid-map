@@ -847,6 +847,7 @@
             </multibucket>
           </current-page>
           <zoom type='entire-view' />
+          <floating-toolbar-visibility value='2' />
           <default-map-tool-selection tool='2' />
           <map-navigation value='1' />
         </viewpoint>
