@@ -1,8 +1,8 @@
 import csv
 
-oldcsv = csv.reader(open("./results-20200415-asian-discrimination-coronavirus.csv"))
-newcsv = open("./results-20200415-asian-discrimination-coronavirus.csv", 'w')
+oldcsv = csv.reader(open("./results.csv"))
+newcsv = open("./resultsnew.csv", 'w')
 for row in oldcsv:
-    current = row[1]
+    current = row[0][1]
     print(current)
     newcsv.write(current + "\n")
