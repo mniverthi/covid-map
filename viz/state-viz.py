@@ -70,11 +70,11 @@ us_state_abbrev = {
 }
 
 dataset['text'] = dataset['state'] +'<br>Cases: '+ dataset['cases'] + '<br>Deaths: '+ dataset['deaths']
-dataset['logcases'] = dataset['cases'].astype(float).apply(lambda x : math.log(x, 10))
+dataset['logcases'] = dataset['cases'].astype(float).apply(lambda x : math.log10(x))
 dataset['statecode'] = dataset['state'].map(us_state_abbrev)
 
 fig1 = px.choropleth(dataset, template = 'plotly_dark', locationmode = "USA-states", locations = 'statecode', color = 'logcases', 
-    hover_name = 'text', animation_frame='date', scope = 'usa', labels={'logcases': 'Number of Cases'}, color_continuous_scale=px.colors.sequential.Plasma)
+    hover_name = 'text', animation_frame='date', scope = 'usa', labels={'cases': 'Number of Cases'}, color_continuous_scale=px.colors.sequential.Plasma)
 fig2 = px.scatter_geo(dataset, scope='usa', template = 'plotly_dark', 
     locationmode = "USA-states", locations = 'statecode', animation_frame = 'date', size = dataset.deaths.astype(float)*5, hover_name='text')
 
