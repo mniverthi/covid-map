@@ -1,0 +1,78 @@
+# Add dropdown
+# fig3.update_layout(
+#     updatemenus=[
+#         dict(
+#             buttons=list([
+#                 dict(
+#                     args=["type", "cases"],
+#                     label="Cases",
+#                     method="restyle"
+#                 ),
+#                 dict(
+#                     args=["type", "deaths"],
+#                     label="Deaths",
+#                     method="restyle"
+#                 )
+#             ]),
+#             direction="down",
+#             pad={"r": 10, "t": 10},
+#             showactive=True,
+#             x=0.1,
+#             xanchor="left",
+#             y=1.1,
+#             yanchor="top"
+#         ),
+#     ]
+# )
+
+# # Add annotation
+# fig3.update_layout(
+#     annotations=[
+#         dict(text="Trace type:", showarrow=False,
+#         x=0, y=1.085, yref="paper", align="left")
+#     ]
+# )
+# data = [dict(type='choropleth',
+#              locations = dataset['statecode'].astype(str),
+#              z=dataset['total exports'].astype(float),
+#              locationmode='USA-states', 
+#              visible=True)]
+# Add dropdown
+# fig3.update_layout(
+#     updatemenus=[
+#         dict(
+#             buttons=list([
+#                 dict(
+#                     args=["type", "cases"],
+#                     label="Cases",
+#                     method="restyle"
+#                 ),
+#                 dict(
+#                     args=["type", "deaths"],
+#                     label="Deaths",
+#                     method="restyle"
+#                 )
+#             ]),
+#             direction="down",
+#             pad={"r": 10, "t": 10},
+#             showactive=True,
+#             x=0.1,
+#             xanchor="left",
+#             y=1.1,
+#             yanchor="top"
+#         ),
+#     ]
+# )
+
+# # Add annotation
+# fig3.update_layout(
+#     annotations=[
+#         dict(text="Trace type:", showarrow=False,
+#         x=0, y=1.085, yref="paper", align="left")
+#     ]
+# )
+# data = [dict(type='choropleth',
+#              locations = dataset['statecode'].astype(str),
+#              z=dataset['total exports'].astype(float),
+#              locationmode='USA-states', 
+#              visible=True)]
