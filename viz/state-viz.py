@@ -1,14 +1,8 @@
-from urllib.request import urlopen
 import pandas as pd
-import json
 import math
-import plotly
 import plotly.express as px
 import plotly.graph_objects as go
-from plotly.subplots import make_subplots
-
-# with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json') as response:
-#     counties = json.load(response)
+import plotly as py
 dataset = pd.read_csv('https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv', dtype=str)
 us_state_abbrev = {
     'Alabama': 'AL',
@@ -72,12 +66,26 @@ us_state_abbrev = {
 dataset['text'] = dataset['state'] +'<br>Cases: '+ dataset['cases'] + '<br>Deaths: '+ dataset['deaths']
 dataset['logcases'] = dataset['cases'].astype(float).apply(lambda x : math.log10(x))
 dataset['statecode'] = dataset['state'].map(us_state_abbrev)
-
-fig1 = px.choropleth(dataset, template = 'plotly_dark', locationmode = "USA-states", locations = 'statecode', color = 'logcases', 
-    hover_name = 'text', animation_frame='date', scope = 'usa', labels={'cases': 'Number of Cases'}, color_continuous_scale=px.colors.sequential.Plasma)
-fig2 = px.scatter_geo(dataset, scope='usa', template = 'plotly_dark', 
-    locationmode = "USA-states", locations = 'statecode', animation_frame = 'date', size = dataset.deaths.astype(float)*5, hover_name='text')
-
+dataset.sort_values(by='date')
+fig1 = px.choropleth(dataset, template = 'plotly_dark', 
+                        locationmode = "USA-states", 
+                        locations = 'statecode', 
+                        color = 'logcases', 
+                        hover_name = 'text', 
+                        animation_frame='date', 
+                        scope = 'usa', 
+                        labels={'cases': 'Number of Cases'}, 
+                        color_continuous_scale=px.colors.sequential.Plasma
+                    )
+fig2 = px.scatter_geo(dataset, 
+                        scope='usa', 
+                        template = 'plotly_dark', 
+                        locationmode = "USA-states", 
+                        locations = 'statecode', 
+                        animation_frame = 'date', 
+                        size = dataset.deaths.astype(float) * 5, 
+                        hover_name='text'
+                    )
 data = []
 layout = dict()
 updatemenus = list([dict(buttons=list()), 
@@ -112,4 +120,4 @@ layout['updatemenus'] = updatemenus
 fig3 = dict(data = data, layout = layout)
 fig1.show()
 fig2.show()
-plotly.offline.plot(fig3)
+py.offline.plot(fig3)

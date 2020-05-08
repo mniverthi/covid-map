@@ -1,21 +1,35 @@
-from urllib.request import urlopen
 import pandas as pd
-import json
 import math
-import plotly
 import plotly.express as px
 import plotly.graph_objects as go
-from plotly.subplots import make_subplots
+import plotly as py
 
 # with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json') as response:
 #     counties = json.load(response)
 dataset = pd.read_csv('https://raw.githubusercontent.com/datasets/covid-19/master/data/countries-aggregated.csv', dtype=str)
 dataset['text'] = dataset['Country'] +'<br>Cases: '+ dataset['Confirmed'] + '<br>Deaths: '+ dataset['Deaths'] + '<br>Recovered: ' + dataset['Recovered']
-# dataset['logcases'] = dataset['Confirmed'].astype(float).apply(lambda x : math.log(x, 10))
-fig1 = px.choropleth(dataset, template = 'plotly_dark', locationmode = "country names", locations = 'Country', color = 'Confirmed', 
-    hover_name = 'text', animation_frame='Date', scope = 'world', labels={'Confirmed': 'Number of Cases'}, color_continuous_scale=px.colors.sequential.Plasma)
-fig2 = px.scatter_geo(dataset, scope='world', template = 'plotly_dark', 
-    locationmode = "country names", locations = 'Country', animation_frame = 'Date', size = dataset.Deaths.astype(float)*5, hover_name='text')
+dataset.sort_values(by='Date')
+dataset['logcases'] = dataset['Confirmed'].astype(float).apply(lambda x : math.log(x, 10))
+fig1 = px.choropleth(dataset, 
+                        template = 'plotly_dark', 
+                        locationmode = "country names", 
+                        locations = 'Country', 
+                        color = 'Confirmed', 
+                        hover_name = 'text', 
+                        animation_frame='Date', 
+                        scope = 'world', 
+                        labels={'Confirmed': 'Number of Cases'}, 
+                        color_continuous_scale=px.colors.sequential.Plasma
+                    )
+fig2 = px.scatter_geo(dataset, 
+                        scope='world', 
+                        template = 'plotly_dark', 
+                        locationmode = "country names", 
+                        locations = 'Country', 
+                        animation_frame = 'Date', 
+                        size = dataset.Deaths.astype(float) * 5, 
+                        hover_name='text'
+                    )
 data = []
 layout = dict()
 updatemenus = list([dict(buttons=list()), 
@@ -56,4 +70,4 @@ layout['updatemenus'] = updatemenus
 fig3 = dict(data = data, layout = layout)
 fig1.show()
 fig2.show()
-plotly.offline.plot(fig3)
+py.offline.plot(fig3)
