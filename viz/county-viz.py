@@ -7,6 +7,7 @@ import plotly.express as px
 import plotly.graph_objects as go 
 import geopy
 from geopy.geocoders import Nominatim
+import plotly.figure_factory as ff
 
 with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json') as response:
     counties = json.load(response)
@@ -14,8 +15,8 @@ dataset = pd.read_csv('https://raw.githubusercontent.com/nytimes/covid-19-data/m
 dataset.sort_values(by='date')
 # geocoder = Nominatim(user_agent='covid-map')
 dataset['location'] = dataset['county'] + ", " + dataset['state']
-dataset.lat = dataset['location'].progress_apply(geocoder.geocode).apply(lambda x : x.latitude if x != None else None)
-dataset.long = dataset['location'].progress_apply(geocoder.geocode).apply(lambda x : x.longitude if x != None else None)
+# dataset.lat = dataset['location'].progress_apply(geocoder.geocode).apply(lambda x : x.latitude if x != None else None)
+# dataset.long = dataset['location'].progress_apply(geocoder.geocode).apply(lambda x : x.longitude if x != None else None)
 # print(dataset)
 dataset['text'] = dataset['county'] +  ', ' + dataset['state'] +'<br>Cases: '+ dataset['cases'] + '<br>Deaths: '+ dataset['deaths']
 us_state_abbrev = {
@@ -78,21 +79,26 @@ us_state_abbrev = {
 }
 dataset['statecode'] = dataset['state'].map(us_state_abbrev)
 fig1 = px.choropleth(dataset, geojson=counties, locations='fips', color='cases',
-                           color_continuous_scale="Viridis",
+                           color_continuous_scale="Magma",
                            range_color=(0, 12),
                            scope="usa",
                            animation_frame='date')
-fig2 = px.scatter_geo(dataset, 
-                        locationmode = 'USA-states', 
-                        scope='usa', 
-                        lat=dataset.lat,
-                        lon=dataset.long,
-                        template = 'plotly_dark', 
-                        animation_frame = 'date', 
-                        size = dataset.deaths.astype(float) * 5, 
-                        hover_name='text'
-                    )
-# fig1.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+fig1.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+fig1.show()
+fig2 = px.choropleth(dataset, geojson=counties, locations='fips', color='deaths',
+                           color_continuous_scale="Magma",
+                           range_color=(0, 12),
+                           scope="usa",
+                           animation_frame='date')        
 fig2.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
-# fig1.show()
 fig2.show()
+# fig3 = px.scatter_geo(dataset, 
+#                         locationmode = 'USA-states', 
+#                         scope='usa', 
+#                         lat=dataset.lat,
+#                         lon=dataset.long,
+#                         template = 'plotly_dark', 
+#                         animation_frame = 'date', 
+#                         size = dataset.deaths.astype(float) * 5, 
+#                         hover_name='text'
+#                     )

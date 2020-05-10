@@ -8,7 +8,6 @@ import plotly as py
 #     counties = json.load(response)
 dataset = pd.read_csv('https://raw.githubusercontent.com/datasets/covid-19/master/data/countries-aggregated.csv', dtype=str)
 dataset['text'] = dataset['Country'] +'<br>Cases: '+ dataset['Confirmed'] + '<br>Deaths: '+ dataset['Deaths'] + '<br>Recovered: ' + dataset['Recovered']
-dataset.sort_values(by='Date')
 dataset['logcases'] = dataset['Confirmed'].astype(float).apply(lambda x : math.log(x, 10))
 fig1 = px.choropleth(dataset, 
                         template = 'plotly_dark', 
@@ -21,6 +20,7 @@ fig1 = px.choropleth(dataset,
                         labels={'Confirmed': 'Number of Cases'}, 
                         color_continuous_scale=px.colors.sequential.Plasma
                     )
+fig1.show()
 fig2 = px.scatter_geo(dataset, 
                         scope='world', 
                         template = 'plotly_dark', 
@@ -30,6 +30,7 @@ fig2 = px.scatter_geo(dataset,
                         size = dataset.Deaths.astype(float) * 5, 
                         hover_name='text'
                     )
+fig2.show()                    
 data = []
 layout = dict()
 updatemenus = list([dict(buttons=list()), 
@@ -68,6 +69,16 @@ for s, country in enumerate(dataset.Country.unique()):
                                           method='update'))
 layout['updatemenus'] = updatemenus
 fig3 = dict(data = data, layout = layout)
-fig1.show()
-fig2.show()
 py.offline.plot(fig3)
+dataset['mortality'] = dataset.deaths.astype(float) / dataset.cases.astype(float)
+dataset = dataset[dataset['date']==dataset['date'].max()]
+fig4 = px.scatter(dataset, 
+                    x=dataset.mortality.astype(float).apply(lambda x : math.log10(1000 * x)), 
+                    y="deaths",  
+                    size=dataset.cases.astype(float).apply(lambda x : math.log10(x)),
+                    color="country", 
+                    # hover_name="state",
+                    # range_x=[0,500000], 
+                    # range_y=[0,50000]
+                )
+fig4.show()
